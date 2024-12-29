@@ -1,11 +1,80 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>你好页面</title>
+    <title>Random Shape Generator with Random Colors</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevent scrolling */
+            height: 100vh; /* Full viewport height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+        .shape {
+            position: absolute;
+            transition: all 0.5s ease;
+        }
+        .circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+        .square {
+            width: 100px;
+            height: 100px;
+        }
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 100px solid;
+        }
+    </style>
 </head>
 <body>
-    <h1>你好</h1>
+    <script>
+        function getRandomColor() {
+            const r = Math.floor(Math.random() * 256); // Red component
+            const g = Math.floor(Math.random() * 256); // Green component
+            const b = Math.floor(Math.random() * 256); // Blue component
+            return `rgb(${r},${g},${b})`;
+        }
+ 
+        function getRandomShape() {
+            const shapes = ['circle', 'square', 'triangle'];
+            const randomIndex = Math.floor(Math.random() * shapes.length);
+            return shapes[randomIndex];
+        }
+ 
+        function createShape() {
+            const shapeType = getRandomShape();
+            const shape = document.createElement('div');
+            shape.classList.add('shape', shapeType);
+ 
+            // Random color
+            shape.style.backgroundColor = getRandomColor();
+ 
+            // Random position within the viewport
+            const maxX = window.innerWidth - 100; // Subtract shape width
+            const maxY = window.innerHeight - 100; // Subtract shape height
+            shape.style.left = `${Math.random() * maxX}px`;
+            shape.style.top = `${Math.random() * maxY}px`;
+ 
+            document.body.appendChild(shape);
+ 
+            // Optionally remove the shape after a delay for better visualization
+            setTimeout(() => {
+                shape.remove();
+            }, 3000); // 3 seconds delay
+        }
+ 
+        document.addEventListener('click', createShape);
+    </script>
 </body>
 </html>
