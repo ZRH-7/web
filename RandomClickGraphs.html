@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Shape Generator</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevent scrolling */
+            height: 100vh; /* Full viewport height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+        .shape {
+            position: absolute;
+            transition: all 0.5s ease;
+        }
+        .circle {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            border-radius: 50%;
+        }
+        .square {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+        }
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 100px solid green;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function getRandomShape() {
+            const shapes = ['circle', 'square', 'triangle'];
+            const randomIndex = Math.floor(Math.random() * shapes.length);
+            return shapes[randomIndex];
+        }
+ 
+        function createShape() {
+            const shapeType = getRandomShape();
+            const shape = document.createElement('div');
+            shape.classList.add('shape', shapeType);
+ 
+            // Random position within the viewport
+            const maxX = window.innerWidth - 100; // Subtract shape width
+            const maxY = window.innerHeight - 100; // Subtract shape height
+            shape.style.left = `${Math.random() * maxX}px`;
+            shape.style.top = `${Math.random() * maxY}px`;
+ 
+            document.body.appendChild(shape);
+ 
+            // Optionally remove the shape after a delay for better visualization
+            setTimeout(() => {
+                shape.remove();
+            }, 3000); // 3 seconds delay
+        }
+ 
+        document.addEventListener('click', createShape);
+    </script>
+</body>
+</html>
